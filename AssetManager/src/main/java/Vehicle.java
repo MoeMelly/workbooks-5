@@ -48,44 +48,57 @@ public class Vehicle extends Asset {
 
 
     public double reducedPrice(double originalCost, int carAge, int odometer, String make) {
-        double reducedValue = 0;
+        double depreciationRate = 0;
 
-        if (carAge <= 3) {
-             reducedValue = 0.03;
+
+        if (carAge <= 1) {
+            depreciationRate = 0.20;
+        }
+        else if (carAge <= 3) {
+            depreciationRate = 0.35;
             System.out.println("Reducing value of \"" + make + "\" by 3%.");
 
         } else if (carAge <= 6) {
-            reducedValue = 0.06;
-            System.out.println("Reducing value of \"" + make + "\" by 6%. New Value: " + reducedValue);
+           depreciationRate = 0.60;
+            System.out.println("Reducing value of \"" + make + "\" by 6%. New Value: " + depreciationRate);
 
         } else if (carAge <= 10) {
-            reducedValue = 0.08;
-            System.out.println("Reducing value of \"" + make + "\" by 8%. New Value: " + reducedValue);
-
-
-
+            depreciationRate = 0.65;
+            System.out.println("Reducing value of \"" + make + "\" by 8%. New Value: " + depreciationRate);
 
 
             if (odometer > 100000 && !make.contains("Honda") && !make.contains("Toyota")) {
-                reducedValue += 0.75;
-                System.out.println("High mileage detected on a non-Honda/Toyota vehicle - value significantly reduced.");
+               depreciationRate += 0.75;
+
 
             }
 
         }
-        double depreciatedValue = originalCost * Math.pow((1 - reducedValue), carAge);
-        return reducedValue;
+
+        return Math.min(depreciationRate,0.95);
+    }
+
+
+
+
+    @Override
+    public double getValues() {
+        return 0;
     }
 
     @Override
-    public void displayInfo() {
-        super.displayInfo(); // Calls the Asset's displayInfo method
-        System.out.println("Make: " + make);
-        System.out.println("Model: " + model);
-        System.out.println("Mileage: " + odometer);
-        System.out.println("Years Owned: " + carsYears);
+    public double getValue(double originalCost, int carAge, int odometer, String make) {
+            double depreciationRate = getDepreciationRate();
+            return originalCost * Math.pow((1 - depreciationRate), carsYears);
+        }
+
+    private double getDepreciationRate() {
+        return 0;
     }
-}
+ }
+
+
+
 
 
 

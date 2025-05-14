@@ -1,4 +1,4 @@
-public class Asset {
+public abstract class Asset {
     String description;
     String dateAcquired;
     double originalCost;
@@ -43,11 +43,15 @@ public class Asset {
         System.out.println("------------------");
         System.out.printf("%-15s : %s%n", "Description",   description);
         System.out.printf("%-15s : %s%n", "Date Acquired", dateAcquired);
-        System.out.printf("%-15s : $%,10.2f%n", "Original Cost", originalCost);
-        System.out.printf("%-15s : $%,10.2f%n", "Current Value", getValue());
     }
 
+
+    public abstract double getValues();
+
+    public abstract double getValue(double originalCost, int carAge, int odometer, String make);
 }
+
+
 
 
 
